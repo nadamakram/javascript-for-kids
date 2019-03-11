@@ -1,96 +1,98 @@
+<!doctype html>
 <html>
-    <head>
-<style>
-body{ background-image: url("os.jpg"); 
-background-size: 52%;
-}
-
-label{
-  color: black;
-  font-size: 50px;
-  
-}
-
-
-
-
-</style>
-    </head>
-    <body>
-        <div>
-        <label> player 2,Enter your letter: </label> <input type="text" id="secret">
-        
-        <input type="button" id="btn" onclick="checkGuess()" value="ok">
-        
-        <p id="show"></p>
-        <p id="result"></p>
-        </div>
-
-        <script type="text/javascript">
-        var SecretWord="google";
-        var secret = [];
-          // Fill this array with placeholders for guessing
-          for (i = 0; i < SecretWord.length; i++)  
-          {
-          secret.push("_");
-          
-          }
-          
-          document.getElementById("show").innerHTML=secret.join(" ");
-  var strikes = 0;
-
-           function checkGuess(){
-          
-         
-            // Create a variable to store the number of bad guesses
-         
-if (strikes < 3 && secret.indexOf("_") >= 0) {
-
-// Prompt Player 2 to guess a letter and store as
-// a variable.
-var letter =document.getElementById("secret").value;
-
-// If the letter does not exist in the SecretWord,
-// add it to the bad guesses.
-if (SecretWord.indexOf(letter) < 0) {
-  // add a strike
-  strikes++;
-  document.getElementById("result").innerHTML = "Bad guess!";
-  
-
-// If the letter exists in the SecretWord, we need to
-// add it to the good guesses array
-}
-
- else {
-  for (i = 0; i < SecretWord.length; i++) {
-    // Each time the guess letter is found, we
-    // add it as a good guess in the same spot
-    if (SecretWord[i] === letter) {
-      secret[i] = letter;
-    }
-  }
-  document.getElementById("show").innerHTML = secret.join(" ");
-  if(secret.indexOf("_") < 0) {
-    document.getElementById("result").innerHTML ="Congratulations on your win!";
-
-/*document.getElementById("result").innerHTML += "The secret SecretWord was " + SecretWord;*/
-
+  <head>
+     <style>
+        body{ background-image: url("os.jpg");
+        background-size: 62%;
+        background-repeat: no-repeat;
         }
-}
-}
+        label{
+        color: black;
+        font-size: 50px;
+        }
+     </style>
+  </head>
+  <body>
+    <div>
+      <label> player 2,Enter your letter: </label>
+      <input type="text" id="secret">
+      <input type="button" id="btn" onclick="checkGuess()" value="ok">
+      <p id="show"></p>
+      <p id="result"></p>
+    </div>
+    <script type="text/javascript">
+      //var SecretWord="google";
+      var wordList = ["chrome", "firefox", "codepen", "javascript", "jquery", "twitter", "github", "wordpress", "opera", "sass", "layout", "standards", "semantic", "designer", "developer", "module", "component", "website", "creative", "banner", "browser", "screen", "mobile", "footer", "header", "typography", "responsive", "programmer", "css", "border", "compass", "grunt", "pixel", "document", "object", "ruby", "modernizr", "bootstrap", "python", "php", "pattern", "ajax", "node", "element", "android", "application", "adobe", "apple", "google", "microsoft", "bookmark", "internet", "icon", "svg", "background", "property", "syntax", "flash", "html", "font", "blog", "network", "server", "content", "database", "socket", "function", "variable", "link", "apache", "query", "proxy", "backbone", "angular", "email", "underscore", "cloud"];
+      var SecretWord = randomSelect();
+      var secret = [];
+      function randomSelect(){return wordList[Math.floor(Math.random() * (wordList.length) - 0) + 0];}
 
-// Once the player has exited the loop, congratulate
-// them on a win, or tell them they have lost and show
-// the secret SecretWord.
+      // Fill this array with placeholders for guessing
+      for (i = 0; i < SecretWord.length; i++)  
+      {
+      secret.push("_");
+      }
+      
+      document.getElementById("show").innerHTML=secret.join(" ");
+      var strikes = 0;
+      function checkGuess(){
+              
+        // Create a variable to store the number of bad guesses
+        
+        if (strikes < 3 && secret.indexOf("_") >= 0) {
+          // Prompt Player 2 to guess a letter and store as
+          // a variable.
+          var letter =document.getElementById("secret").value;
+          // If the letter does not exist in the SecretWord,
+          // add it to the bad guesses.
+          
+          if (SecretWord.indexOf(letter) < 0) {
+            // add a strike
+            strikes++;
+            document.getElementById("result").innerHTML = "Bad guess!";  
+          }
+          // If the letter exists in the SecretWord, we need to
+          // add it to the good guesses array
+    
+          else {
+            document.getElementById("result").innerHTML = "Wow, right!";
+            for (i = 0; i < SecretWord.length; i++) {
+            // Each time the guess letter is found, we
+            // add it as a good guess in the same spot
+              if (SecretWord[i] === letter) {
+              secret[i] = letter;
+              }
+            }
 
-else if (strikes === 3) {
-    document.getElementById("result").innerHTML = "Sorry, please play again!";
-    document.getElementById("result").innerHTML += "The secret SecretWord was " + SecretWord;
+            document.getElementById("show").innerHTML = secret.join(" ");
+            if(secret.indexOf("_") < 0) {
+              document.getElementById("result").innerHTML ="Congratulations on your win!";
+              /*document.getElementById("result").innerHTML += "The secret SecretWord was " + SecretWord;*/
+            }
+          }
+        }
+        // Once the player has exited the loop, congratulate
+        // them on a win, or tell them they have lost and show
+        // the secret SecretWord.
+        else if (strikes === 3) {
+        document.getElementById("result").innerHTML = "Sorry, please play again!";
+        document.getElementById("result").innerHTML += "The secret SecretWord was " + SecretWord;
+        }
+      }
+      // Trigger a Button Click on Enter
+      // Get the input field
+      var input = document.getElementById("secret");
 
-}
-}
-
-     </script>
-    </body>
+      // Execute a function when the user releases a key on the keyboard
+      input.addEventListener("keyup", function(event) {
+      // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          // Cancel the default action, if needed
+          event.preventDefault();
+          // Trigger the button element with a click
+          document.getElementById("btn").click();
+        }
+      })
+    </script>
+  </body>
 </html>
