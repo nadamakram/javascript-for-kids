@@ -1,9 +1,96 @@
-<!doctype html>
 <html>
-  <head>
-    <title>JavaScript for Kids</title>
-  </head>
-  <body>
-    <script src="word-guess.js"></script>
-  </body>
+    <head>
+<style>
+body{ background-image: url("os.jpg"); 
+background-size: 52%;
+}
+
+label{
+  color: black;
+  font-size: 50px;
+  
+}
+
+
+
+
+</style>
+    </head>
+    <body>
+        <div>
+        <label> player 2,Enter your letter: </label> <input type="text" id="secret">
+        
+        <input type="button" id="btn" onclick="checkGuess()" value="ok">
+        
+        <p id="show"></p>
+        <p id="result"></p>
+        </div>
+
+        <script type="text/javascript">
+        var SecretWord="google";
+        var secret = [];
+          // Fill this array with placeholders for guessing
+          for (i = 0; i < SecretWord.length; i++)  
+          {
+          secret.push("_");
+          
+          }
+          
+          document.getElementById("show").innerHTML=secret.join(" ");
+  var strikes = 0;
+
+           function checkGuess(){
+          
+         
+            // Create a variable to store the number of bad guesses
+         
+if (strikes < 3 && secret.indexOf("_") >= 0) {
+
+// Prompt Player 2 to guess a letter and store as
+// a variable.
+var letter =document.getElementById("secret").value;
+
+// If the letter does not exist in the SecretWord,
+// add it to the bad guesses.
+if (SecretWord.indexOf(letter) < 0) {
+  // add a strike
+  strikes++;
+  document.getElementById("result").innerHTML = "Bad guess!";
+  
+
+// If the letter exists in the SecretWord, we need to
+// add it to the good guesses array
+}
+
+ else {
+  for (i = 0; i < SecretWord.length; i++) {
+    // Each time the guess letter is found, we
+    // add it as a good guess in the same spot
+    if (SecretWord[i] === letter) {
+      secret[i] = letter;
+    }
+  }
+  document.getElementById("show").innerHTML = secret.join(" ");
+  if(secret.indexOf("_") < 0) {
+    document.getElementById("result").innerHTML ="Congratulations on your win!";
+
+/*document.getElementById("result").innerHTML += "The secret SecretWord was " + SecretWord;*/
+
+        }
+}
+}
+
+// Once the player has exited the loop, congratulate
+// them on a win, or tell them they have lost and show
+// the secret SecretWord.
+
+else if (strikes === 3) {
+    document.getElementById("result").innerHTML = "Sorry, please play again!";
+    document.getElementById("result").innerHTML += "The secret SecretWord was " + SecretWord;
+
+}
+}
+
+     </script>
+    </body>
 </html>
